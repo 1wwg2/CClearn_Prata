@@ -5,7 +5,6 @@ double mul(double x, double y);
 double del(double x, double y);
 using namespace std;
 int main() {
-
 	double(*p[3])(double x, double y) = { add, mul, del };
 	double a, b;
 	while (cin >> a >> b) {
