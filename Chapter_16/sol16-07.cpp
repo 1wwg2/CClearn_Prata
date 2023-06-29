@@ -10,6 +10,7 @@ int main()
 	cout << "Enter the number of spots to be selected: ";
 	int selected = 0;
 	cin >> selected;
+	vector<int>trying(spots);
 
 	vector<int> result = Lotto(spots, selected);
 	cout << "Your lucky numbers are: ";
@@ -18,7 +19,7 @@ int main()
 	{
 		std::cout << result[i] << " ";
 	}
-	cout << std::endl;
+	cout << endl;
 
 	return 0;
 }
@@ -27,35 +28,14 @@ std::vector<int> Lotto(int spots, int selected)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(1, spots);
-	if (spots < selected)
-	{
-		std::cout << "The second argument of Lotto() must be less than ";
-		std::cout << "the first argument." << std::endl;
-		std::cout << "Program abort" << std::endl;
-		exit(EXIT_FAILURE);
-	}
 
-	if (spots < 0 || selected < 0)
+	vector<int>temp(spots);
+	for (int i = 0; i < spots; i++)
 	{
-		std::cout << "Both arguments of Lotto() must be positive integers";
-		std::cout << std::endl;
-		std::cout << "Program abort" << std::endl;
-		exit(EXIT_FAILURE);
+		temp[i] = i + 1;
+		cout << temp[i] << " ";
 	}
-
-	std::vector<int> v;
-	for (int i = 1; i < spots + 1; i++)
-	{
-		v.push_back(i);
-	}
-
-	shuffle(v.begin(), v.end(), gen);
-
-	std::vector<int> picks;
-	for (int i = 0; i < selected; i++)
-	{
-		picks.push_back(v[i]);
-	}
-	return picks;
+	shuffle(temp.begin(), temp.end(), gen);
+	temp.erase(temp.begin() + selected, temp.end());
+	return temp;
 }
