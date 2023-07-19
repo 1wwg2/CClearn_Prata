@@ -23,6 +23,7 @@ int main() {
 		cout << buff2[i].dross << " " << buff2[i].slag << endl;
 	}
 	delete[] buff;
+	delete[] buff2;
 	return 0;
 }
 
