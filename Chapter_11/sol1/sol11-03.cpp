@@ -1,61 +1,65 @@
 #include "Header.h"
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
+// Компилировать вместе с файлом vect.cpp 
+//#include "stdafx.h" --- Visual Studio --- precompiled headers
 #include <iostream>
+#include <cstdlib> // прототипы rand(), srand() 
+#include <ctime> // прототип time() 
 
-int main(void)
+
+//-------------------------------------------------------------------------------------------------
+int main()
 {
-    using namespace std;
-    using VECTOR::Vector;
-    ofstream fout;
-    fout.open("vect.txt");
-    srand(time(0));
-    double direction;
-    Vector step;
-    Vector result(0.0, 0.0);
-    unsigned long steps = 0;
-    double target;
-    double dstep;
-    cout << "Enter target distance (q to quit): ";
-    while (cin >> target)
-    {
-        cout << "Enter step length: ";
-        if (!(cin >> dstep))
-            break;
-        fout << "Target Distance: " << target << ", "
-            << "Step Size: " << dstep << endl;
-        while (result.magval() < target)
-        {
-            fout << steps << ": " << result << endl;
-            direction = rand() % 360;
-            step.reset(dstep, direction, Vector::POL);
-            result = result + step;
-            steps++;
-        }
-        fout << "After " << steps << " steps, the subject "
-            "has the following location:\n" << result << endl;
+	ofstream file;
+	file.open("ex11.1.txt");
+	if (!file.is_open())
+	{
+		cout << "ERR";
+		exit(EXIT_FAILURE);
+	}
+	using namespace std;
+	using VECTOR::Vector;
+	srand(time(0)); // начальное значение для генератора случайных чисел 
+	double direction;
+	Vector step;
+	Vector result(0.0, 0.0);
+	unsigned long steps = 0;
+	double target;
+	double dstep;
+	cout << "Enter target distance (q to quit) : ";
+	// Ввод заданного расстояния (q для завершения) 
+	while (cin >> target)
+	{
+		cout << "Enter step length: "; // ввод длины шага 
+		if (!(cin >> dstep))
+			break;
+		while (result.magval() < target)
+		{
+			direction = rand() % 360;
+			step.reset(dstep, direction, Vector::POL);
+			result = result + step;
+			file << steps << ": (x,y) = " << result << endl;
+			steps++;
 
-        cout << "After " << steps << " steps, the subject "
-            "has the following location:\n" << result << endl;
-        result.polar_mode();
+		}
+		file << "After " << steps << " steps, the subject "
+			"has the following location:\n";
+		file << result << endl; // вывод позиции после steps шагов 
+		result.polar_mode();
+		file << " or\n" << result << endl;
+		file << "Average outward distance per step = "
+			<< result.magval() / steps << endl; // вывод среднего расстояния на один шаг 
+		steps = 0;
+		result.reset(0.0, 0.0);
+		cout << "Sucsess!" << endl;
+		cout << "Enter target distance (q to quit) : ";
+		// Ввод заданного расстояния (q для завершения) 
+	}
+	cout << "Bye!\n";
+	cin.clear();
+	while (cin.get() != ' \n ')
+		continue;
 
-        fout << " or\n" << result << endl;
-        fout << "Average outward distance per step = "
-            << result.magval() / steps << endl;
-
-        cout << " or\n" << result << endl;
-        cout << "Average outward distance per step = "
-            << result.magval() / steps << endl;
-        steps = 0;
-        result.reset(0.0, 0.0);
-        cout << "Enter target distance (q to quit): ";
-    }
-    fout.close();
-    cout << "Bye!\n";
-    cin.clear();
-    while (cin.get() != '\n')
-        continue;
-    return 0;
+	std::cin.get();
+	std::cin.get();
+	return 0;
 }
-
