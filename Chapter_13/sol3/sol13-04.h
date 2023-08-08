@@ -18,7 +18,7 @@ protected:
 public:
 	abcDMA(const char* l = "null", int r = 0);
 	abcDMA(const abcDMA& rs);
-	virtual ~abcDMA() {}
+	virtual ~abcDMA() { delete[] label; }
 	abcDMA& operator=(const abcDMA& rs);
 	virtual void View() = 0;
 	friend std::ostream& operator<<(std::ostream& os, const abcDMA& rs);
@@ -31,6 +31,7 @@ class baseDMA : public abcDMA
 private:
 
 public:
+	void View() override;
 	baseDMA(const char* l = "null", int r = 0);
 	baseDMA(const baseDMA& rs);
 	virtual ~baseDMA();
@@ -48,6 +49,7 @@ private:
 	enum { COL_LEN = 40 };
 	char color[COL_LEN];
 public:
+	void View() override;
 	lacksDMA(const char* ñ = "blank", const char* l = "null", int r = 0);
 	lacksDMA(const char* c, const baseDMA& rs);
 	friend std::ostream& operator<<(std::ostream& os, const lacksDMA& rs);
@@ -59,6 +61,7 @@ class hasDMA : public abcDMA
 private:
 	char* style;
 public:
+	void View() override;
 	hasDMA(const char* s = "none", const char* l = "null", int r = 0);
 	hasDMA(const char* s, const baseDMA& rs);
 	hasDMA(const hasDMA& hs);
