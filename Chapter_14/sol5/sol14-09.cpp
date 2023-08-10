@@ -54,7 +54,7 @@ manager::manager() : abstr_emp()
 }
 manager::manager(const std::string& fn, const std::string& In, const std::string& j, int ico) : abstr_emp(fn, In, j), inchargeof(0) {}
 
-manager::manager(const abstr_emp& e, int ico) : abstr_emp(e), inchargeof(ico) {}
+manager::manager(const abstr_emp& e, int ico) : abstr_emp(e), inchargeof(ico) {} // констуктор
 
 manager::manager(const manager& m) : abstr_emp(m)
 {
