@@ -40,3 +40,4 @@ public:
 	void Show() const;
 	friend ostream& operator<<(ostream& os, const VintagePort& vp);
 };
+///cccññââûûû
